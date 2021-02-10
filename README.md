@@ -1,0 +1,2 @@
+# FakeNewsDetector
+Senior Project
