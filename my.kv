@@ -1,0 +1,175 @@
+<MainWindow>:
+    name: "main"
+
+    FloatLayout:
+        cols:1
+
+        FloatLayout:
+            size: root.width, root.height/2
+
+            Label:
+                text: "Fake News Detector"
+                size_hint: 0.8, 0.2
+                pos_hint: {"x":0.1, "top":1}
+                font_size: (root.width**2 + root.height**2) / 14**4
+
+            Button:
+                text: "Fact Check an Article"
+                size_hint: 0.5, 0.15
+                pos_hint: {"x":0.25, "y":0.6}
+                font_size: (root.width**2 + root.height**2) / 14**4
+                on_release:
+                    root.manager.transition.direction = "right"
+                    root.checkButtonClick()
+
+            Button:
+                text: "View Recently Checked Articles"
+                size_hint: 0.5, 0.15
+                pos_hint: {"x":0.25, "y":0.4}
+                font_size: (root.width**2 + root.height**2) / 14**4
+                on_release:
+                    root.manager.transition.direction = "left"
+                    root.recentButtonClick()
+
+            Button:
+                text: "About"
+                size_hint: 0.5, 0.15
+                pos_hint: {"x":0.25, "y":0.2}
+                font_size: (root.width**2 + root.height**2) / 14**4
+                on_release:
+                    root.manager.transition.direction = "up"
+                    root.aboutButtonClick()
+
+            Label:
+                text: "(c) 2020-2021 Lestyn Brooks"
+                size_hint: 0.2, 0.2
+                pos_hint: {"x":0.375, "bottom":1}
+                font_size: (root.width**2 + root.height**2) / 17**4
+
+
+<FactCheckWindow>:
+    name: "factcheck"
+
+    articleURL: articleURL
+    classification: classification
+
+    FloatLayout:
+        cols:1
+
+        FloatLayout:
+            size: root.width, root.height/2
+
+            Label:
+                text: "Fact Check an Article"
+                font_size: (root.width**2 + root.height**2) / 13**4
+                pos_hint: {"x":0.35, "top":1}
+                size_hint: 0.35, 0.15
+
+            TextInput:
+                pos_hint: {"x":0.275, "top":0.8}
+                size_hint: 0.5, 0.075
+                hint_text: "Article URL"
+                id: articleURL
+
+            Button:
+                text: "Fact Check"
+                pos_hint: {"x":0.275, "top":0.7}
+                size_hint: 0.5, 0.075
+                on_release:
+                    root.factCheckButtonClick()
+
+            Label:
+                text: ""
+                id: classification
+
+            Button:
+                text: "Back to Main Menu"
+                pos_hint: {"x":0.275, "bottom":0.7}
+                size_hint: 0.5, 0.075
+                on_release:
+                    root.manager.transition.direction = "left"
+                    root.backButtonClick()
+
+<RecentlyCheckedWindow>:
+    name: "recentlychecked"
+
+<AboutWindow>:
+    name: "about"
+
+    FloatLayout:
+
+        Label:
+            text: "About"
+            font_size: (root.width**2 + root.height**2) / 13**4
+            pos_hint: {"x":0.35, "top":1}
+            size_hint: 0.35, 0.15
+
+        FloatLayout:
+            size: root.width, root.height/2
+
+            Image:
+                id: selfPic
+                source: 'IMG_0901.jpg'
+                allow_stretch: False
+                pos_hint: {"x":0.35, "top":0.875}
+                size_hint: 0.25, 0.25
+
+
+            Label:
+                text: "My Name is Lestyn Brooks. I am a Senior at Lawrence Technological University studying Software Engineering."
+                multiline: True
+                font_size: (root.width**2 + root.height**2) / 17**4
+                pos_hint: {"x":0.15, "top":0.775}
+                size_hint: 0.5, 0.5
+
+            Label:
+                text: "This Fake News Detection application will satisfy my Senior Project requirement to graduate in May of 2021. I was motivated to do this as my project"
+                multiline: True
+                font_size: (root.width**2 + root.height**2) / 17**4
+                pos_hint: {"x":0.255, "top":0.75}
+                size_hint: 0.5, 0.5
+
+            Label:
+                text: "because of how polarized the American political scene has become over the last few election cycles. With many people on both ends of the political"
+                multiline: True
+                font_size: (root.width**2 + root.height**2) / 17**4
+                pos_hint: {"x":0.255, "top":0.725}
+                size_hint: 0.5, 0.5
+
+            Label:
+                text: "spectrum posting and sharing false information online, I feel that it's important for people to easily know if an article they're reading is truthful or not."
+                multiline: True
+                font_size: (root.width**2 + root.height**2) / 17**4
+                pos_hint: {"x":0.255, "top":0.7}
+                size_hint: 0.5, 0.5
+
+            Label:
+                text: "Due to the nature of this project, it's worth mentioning that as far as politics go, I consider myself to be a left-leaning moderate. In an effort to make it"
+                multiline: True
+                font_size: (root.width**2 + root.height**2) / 17**4
+                pos_hint: {"x":0.255, "top":0.675}
+                size_hint: 0.5, 0.5
+
+            Label:
+                text: "clear that there isn't any sort of political bias involved, all of the source code and datasets involved will be available on my GitHub page. I have nothing"
+                multiline: True
+                font_size: (root.width**2 + root.height**2) / 17**4
+                pos_hint: {"x":0.255, "top":0.65}
+                size_hint: 0.5, 0.5
+
+            Label:
+                text: "to hide, and my only real goal with this project (besides graduating on time) is to see if it is possible for a machine to determine an article's legitimacy."
+                multiline: True
+                font_size: (root.width**2 + root.height**2) / 17**4
+                pos_hint: {"x":0.255, "top":0.625}
+                size_hint: 0.5, 0.5
+
+        FloatLayout:
+
+            Button:
+                text: "Back to Main Menu"
+                pos_hint: {"x":0.275, "bottom":0.7}
+                size_hint: 0.5, 0.075
+                on_release:
+                    root.manager.transition.direction = "down"
+                    root.backButtonClick()
