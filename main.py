@@ -6,16 +6,11 @@ from kivy.app import App
 from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.floatlayout import FloatLayout
-from kivy.uix.gridlayout import GridLayout
-from kivy.uix.textinput import TextInput
 from kivy.config import Config
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.popup import Popup
-from kivy.properties import ObjectProperty
-from kivy.uix.recycleview.layout import LayoutSelectionBehavior
-from kivy.uix.recyclegridlayout import RecycleGridLayout
+from kivy.properties import ObjectProperty, ListProperty
 import requests
 
 Config.set('graphics', 'resizable', True)
@@ -109,15 +104,13 @@ class RecentlyCheckedWindow(Screen):
     def displayArticles(self):
         try:
             connection = create_server_connection("localhost", "root", pw, "Articles")
-            cursor = connection.cursor()
+            cursor = connection.cursor(buffered=True)
             sql_query = "SELECT Title, Text, Label FROM Article ORDER BY ID DESC"
             cursor.execute(sql_query)
             connection.commit()
             rows = cursor.fetchall()
             for row in rows:
-                for col in row:
-                    self.data_items.append(col)
-            print("Here are all of the articles checked so far")
+                print(row)
         except mysql.connector.Error as err:
             print("Error {}".format(err))
 
