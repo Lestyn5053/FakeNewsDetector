@@ -16,6 +16,7 @@ from kivy.uix.popup import Popup
 from kivy.properties import ObjectProperty
 from kivy.uix.recycleview.layout import LayoutSelectionBehavior
 from kivy.uix.recyclegridlayout import RecycleGridLayout
+import requests
 
 Config.set('graphics', 'resizable', True)
 
@@ -28,19 +29,21 @@ class FactCheckWindow(Screen):
         self.txt.text = ''
 
     def factCheckButtonClick(self):
-        if not self.isSatireArticle():
-            try:
-                scrapeArticleInfo(self.articleURL.text)
-                connection = create_server_connection("localhost", "root", pw, "Articles")
-                cursor = connection.cursor(prepared=True)
-                sql_insert_query = "INSERT INTO Article (Title, Text) VALUES (%s, %s)"
-                insert_tuple = (getArticleTitle(self.articleURL.text), getArticleText(self.articleURL.text))
+        if not self.returns404Error():
+            if not self.isNotAnArticle():
+                if not self.isSatireArticle():
+                    try:
+                        scrapeArticleInfo(self.articleURL.text)
+                        connection = create_server_connection("localhost", "root", pw, "Articles")
+                        cursor = connection.cursor(prepared=True)
+                        sql_insert_query = "INSERT INTO Article (Title, Text) VALUES (%s, %s)"
+                        insert_tuple = (getArticleTitle(self.articleURL.text), getArticleText(self.articleURL.text))
 
-                cursor.execute(sql_insert_query, insert_tuple)
-                connection.commit()
-                print("Article added to database!")
-            except mysql.connector.Error as err:
-                print("Parameterized query failed {}".format(err))
+                        cursor.execute(sql_insert_query, insert_tuple)
+                        connection.commit()
+                        print("Article added to database!")
+                    except mysql.connector.Error as err:
+                        print("Parameterized query failed {}".format(err))
 
     def isSatireArticle(self):
         satireSources = ["alhudood", "babylonbee", "bbspot", "thebeaverton", "betootaadvocate", "borowitz-report",
@@ -68,6 +71,23 @@ class FactCheckWindow(Screen):
                 x += 1
 
         return articleIsSatire
+
+    def returns404Error(self):
+        notFound = False
+        r = requests.head(self.articleURL.text)
+        if r.status_code == 404:
+            error404()
+            notFound = True
+
+        return notFound
+
+    def isNotAnArticle(self):
+        notArticle = False
+        if not getArticleAuthors(self.articleURL.text):
+            notAnArticle()
+            notArticle = True
+
+        return notArticle
 
     def backButtonClick(self):
         sm.current = "main"
@@ -117,6 +137,21 @@ class WindowManager(ScreenManager):
 def satireArticle():
     pop = Popup(title='Satire Detected',
                 content=Label(text='This article comes from a known satire source and thus should be treated as fake.'),
+                size_hint=(None, None), size=(400, 400))
+    pop.open()
+
+
+def error404():
+    pop = Popup(title='Article Not found',
+                content=Label(
+                    text='Unfortunately we couldn\'t find that article. Please check your link and try again.'),
+                size_hint=(None, None), size=(400, 400))
+    pop.open()
+
+
+def notAnArticle():
+    pop = Popup(title='Not an Article',
+                content=Label(text='The link you provided is not an article and thus cannot be checked.'),
                 size_hint=(None, None), size=(400, 400))
     pop.open()
 

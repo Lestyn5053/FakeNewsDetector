@@ -31,3 +31,11 @@ def getArticleText(url):
     article.parse()
 
     return article.text
+
+def getArticleAuthors(url):
+    article = Article(url)
+
+    article.download()
+    article.parse()
+
+    return article.authors
