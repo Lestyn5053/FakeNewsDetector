@@ -30,8 +30,8 @@ class FactCheckWindow(Screen):
 
     def factCheckButtonClick(self):
         if not self.returns404Error():
-            if not self.isNotAnArticle():
-                if not self.isSatireArticle():
+            if not self.isSatireArticle():
+                if not self.isNotAnArticle():
                     try:
                         scrapeArticleInfo(self.articleURL.text)
                         connection = create_server_connection("localhost", "root", pw, "Articles")
@@ -136,7 +136,7 @@ class WindowManager(ScreenManager):
 
 def satireArticle():
     pop = Popup(title='Satire Detected',
-                content=Label(text='This article comes from a known satire source and thus should be treated as fake.'),
+                content=Label(text='This article comes from a known satire source\n and thus should be treated as fake.'),
                 size_hint=(None, None), size=(400, 400))
     pop.open()
 
@@ -144,14 +144,14 @@ def satireArticle():
 def error404():
     pop = Popup(title='Article Not found',
                 content=Label(
-                    text='Unfortunately we couldn\'t find that article. Please check your link and try again.'),
+                    text='Unfortunately we couldn\'t find that article.\n Please check your link and try again.'),
                 size_hint=(None, None), size=(400, 400))
     pop.open()
 
 
 def notAnArticle():
     pop = Popup(title='Not an Article',
-                content=Label(text='The link you provided is not an article and thus cannot be checked.'),
+                content=Label(text='The link you provided is not an article\n and thus cannot be checked.'),
                 size_hint=(None, None), size=(400, 400))
     pop.open()
 

@@ -131,3 +131,6 @@ dmypy.json
 
 # Article CSV file
 articles.csv
+
+# JetBrains PyCharm
+.idea/
