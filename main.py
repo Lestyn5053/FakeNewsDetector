@@ -109,7 +109,7 @@ class RecentlyCheckedWindow(Screen):
         try:
             connection = create_server_connection("localhost", "root", pw, "Articles")
             cursor = connection.cursor(buffered=True)
-            sql_query = "SELECT Title, Text, Label FROM Article ORDER BY ID DESC"
+            sql_query = "SELECT Title, Label FROM Article ORDER BY ID DESC"
             cursor.execute(sql_query)
             connection.commit()
             rows = cursor.fetchall()
