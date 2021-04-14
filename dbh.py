@@ -41,8 +41,8 @@ def execute_query(connection, query):
 pw = "Wiiman99is#1"
 dbConnection = create_server_connection("localhost", "root", pw, "Articles")
 
-# database_query = "CREATE DATABASE Articles"
-# create_database(dbConnection, database_query)
+database_query = "CREATE DATABASE IF NOT EXISTS Articles"
+create_database(dbConnection, database_query)
 
-# new_table = "CREATE TABLE Article (ID INT NOT NULL AUTO_INCREMENT, Title VARCHAR(250) NOT NULL, Text LONGTEXT NOT NULL, PRIMARY KEY(ID))"
-# execute_query(dbConnection, new_table)
+new_table = "CREATE TABLE IF NOT EXISTS Article (ID INT NOT NULL AUTO_INCREMENT, Title VARCHAR(250) NOT NULL, Text LONGTEXT NOT NULL, PRIMARY KEY(ID))"
+execute_query(dbConnection, new_table)

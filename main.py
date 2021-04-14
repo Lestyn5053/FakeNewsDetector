@@ -37,6 +37,8 @@ class FactCheckWindow(Screen):
                         cursor.execute(sql_insert_query, insert_tuple)
                         connection.commit()
                         print("Article added to database!")
+                        # This is just filler code for now, will need to change this to whatever the algorithm gives us
+                        self.classification.text = "Real"
                     except mysql.connector.Error as err:
                         print("Parameterized query failed {}".format(err))
 
@@ -84,6 +86,7 @@ class FactCheckWindow(Screen):
 
         return notArticle
 
+
     def backButtonClick(self):
         sm.current = "main"
 
@@ -101,6 +104,7 @@ class MainWindow(Screen):
 
 
 class RecentlyCheckedWindow(Screen):
+
     def displayArticles(self):
         try:
             connection = create_server_connection("localhost", "root", pw, "Articles")
@@ -109,8 +113,10 @@ class RecentlyCheckedWindow(Screen):
             cursor.execute(sql_query)
             connection.commit()
             rows = cursor.fetchall()
-            for row in rows:
-                print(row)
+            # for row in rows:
+                # self.add_widget(Label(text=str(row[0])))
+                # self.add_widget(Label(text=str(row[1])))
+            self.add_widget(Label(text=str(rows[0][0])))
         except mysql.connector.Error as err:
             print("Error {}".format(err))
 
@@ -129,13 +135,14 @@ class WindowManager(ScreenManager):
 
 def satireArticle():
     pop = Popup(title='Satire Detected',
-                content=Label(text='This article comes from a known satire source\n and thus should be treated as fake.'),
+                content=Label(
+                    text='This article comes from a known satire source\n and thus should be treated as fake.'),
                 size_hint=(None, None), size=(400, 400))
     pop.open()
 
 
 def error404():
-    pop = Popup(title='Article Not found',
+    pop = Popup(title='Article Not Found',
                 content=Label(
                     text='Unfortunately we couldn\'t find that article.\n Please check your link and try again.'),
                 size_hint=(None, None), size=(400, 400))
