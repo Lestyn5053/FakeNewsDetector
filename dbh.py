@@ -38,7 +38,7 @@ def execute_query(connection, query):
         print(f"Error: '{err}'")
 
 
-pw = "Wiiman99is#1"
+pw = "root"
 dbConnection = create_server_connection("localhost", "root", pw, "Articles")
 
 database_query = "CREATE DATABASE IF NOT EXISTS Articles"

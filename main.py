@@ -1,4 +1,7 @@
 import kivy
+from kivy.metrics import cm
+from kivy.uix.gridlayout import GridLayout
+
 from articleScraper import *
 from dbh import *
 
@@ -10,7 +13,7 @@ from kivy.config import Config
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.popup import Popup
-from kivy.properties import ObjectProperty, ListProperty
+from kivy.properties import ObjectProperty
 import requests
 
 Config.set('graphics', 'resizable', True)
@@ -104,19 +107,19 @@ class MainWindow(Screen):
 
 
 class RecentlyCheckedWindow(Screen):
+    layout = ObjectProperty(None)
 
     def displayArticles(self):
         try:
             connection = create_server_connection("localhost", "root", pw, "Articles")
             cursor = connection.cursor(buffered=True)
-            sql_query = "SELECT Title, Label FROM Article ORDER BY ID DESC"
+            sql_query = "SELECT Title, Label FROM Article ORDER BY ID DESC LIMIT 8"
             cursor.execute(sql_query)
             connection.commit()
             rows = cursor.fetchall()
-            # for row in rows:
-                # self.add_widget(Label(text=str(row[0])))
-                # self.add_widget(Label(text=str(row[1])))
-            self.add_widget(Label(text=str(rows[0][0])))
+            for row in rows:
+                self.layout.add_widget(Label(text=str(row[0]), halign='center', text_size=(350, None)))
+                self.layout.add_widget(Label(text=str(row[1]), halign='center', text_size=(350, None)))
         except mysql.connector.Error as err:
             print("Error {}".format(err))
 
