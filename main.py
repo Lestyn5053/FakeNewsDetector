@@ -1,20 +1,15 @@
-import kivy
-from kivy.metrics import cm
-from kivy.uix.gridlayout import GridLayout
+import requests
+from kivy.app import App
+from kivy.config import Config
+from kivy.lang import Builder
+from kivy.properties import ObjectProperty
+from kivy.uix.label import Label
+from kivy.uix.popup import Popup
+from kivy.uix.screenmanager import ScreenManager, Screen
 
 from articleScraper import *
 from dbh import *
-
-from kivy.app import App
-from kivy.uix.button import Button
-from kivy.uix.label import Label
-from kivy.uix.boxlayout import BoxLayout
-from kivy.config import Config
-from kivy.lang import Builder
-from kivy.uix.screenmanager import ScreenManager, Screen
-from kivy.uix.popup import Popup
-from kivy.properties import ObjectProperty
-import requests
+from factCheck import *
 
 Config.set('graphics', 'resizable', True)
 
@@ -34,14 +29,15 @@ class FactCheckWindow(Screen):
                         scrapeArticleInfo(self.articleURL.text)
                         connection = create_server_connection("localhost", "root", pw, "Articles")
                         cursor = connection.cursor(prepared=True)
-                        sql_insert_query = "INSERT INTO Article (Title, Text) VALUES (%s, %s)"
-                        insert_tuple = (getArticleTitle(self.articleURL.text), getArticleText(self.articleURL.text))
+                        sql_insert_query = "INSERT INTO Article (Title, Text, Label) VALUES (%s, %s, %s)"
+                        insert_tuple = (getArticleTitle(self.articleURL.text), getArticleText(self.articleURL.text),
+                                        str(predict_real_fake()))
 
                         cursor.execute(sql_insert_query, insert_tuple)
                         connection.commit()
                         print("Article added to database!")
                         # This is just filler code for now, will need to change this to whatever the algorithm gives us
-                        self.classification.text = "Real"
+                        self.classification.text = str(predict_real_fake())
                     except mysql.connector.Error as err:
                         print("Parameterized query failed {}".format(err))
 

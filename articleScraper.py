@@ -9,10 +9,10 @@ def scrapeArticleInfo(url):
     article.parse()
 
     with open('articles.csv', mode='w') as article_set:
-        fieldnames = ['title', 'content']
+        fieldnames = ['title', 'text']
         article_writer = csv.DictWriter(article_set, fieldnames=fieldnames)
         article_writer.writeheader()
-        article_writer.writerow({'title': article.title, 'content': article.text})
+        article_writer.writerow({'title': article.title, 'text': article.text})
 
 
 def getArticleTitle(url):
