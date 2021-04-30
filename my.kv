@@ -92,19 +92,10 @@
 
 <RecentlyCheckedWindow>:
     name: "recentlychecked"
+    layout: layout
     BoxLayout:
-        orientation: "vertical"
-        Label:
-            text: ""
-            id: title1
-
-        Label:
-            text: ""
-            id: label1
-        GridLayout:
-            size_hint: 1, None
-            size_hint_y: None
-            cols: 2
+        orientation: "horizontal"
+        size: root.width, root.height/4
 
         Button:
             text: "Get data"
