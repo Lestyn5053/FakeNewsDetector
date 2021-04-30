@@ -32,6 +32,7 @@ def getArticleText(url):
 
     return article.text
 
+
 def getArticleAuthors(url):
     article = Article(url)
 

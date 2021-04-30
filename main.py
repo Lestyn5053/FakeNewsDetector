@@ -36,8 +36,7 @@ class FactCheckWindow(Screen):
                         cursor.execute(sql_insert_query, insert_tuple)
                         connection.commit()
                         print("Article added to database!")
-                        # This is just filler code for now, will need to change this to whatever the algorithm gives us
-                        self.classification.text = str(predict_real_fake())
+                        self.classification.text = "This article is likely " + str(predict_real_fake())
                     except mysql.connector.Error as err:
                         print("Parameterized query failed {}".format(err))
 

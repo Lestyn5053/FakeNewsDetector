@@ -9,7 +9,7 @@ from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.utils import shuffle
-from sklearn.tree import DecisionTreeClassifier
+from sklearn.linear_model import PassiveAggressiveClassifier
 import pickle
 import string
 import nltk
@@ -39,6 +39,8 @@ def punctuation_removal(text):
 
 
 data['text'] = data['text'].apply(punctuation_removal)
+# test['text'] = test['text'].apply(punctuation_removal)
+print(test['text'])
 
 data['text'] = data['text'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
 
@@ -47,14 +49,11 @@ data['text'] = data['text'].apply(lambda x: ' '.join([word for word in x.split()
 # data.groupby(['target'])['text'].count().plot(kind="bar")
 # plt.show()
 
-X_train, X_test, Y_train, Y_test = train_test_split(data['text'], data.target, test_size=0.2, random_state=42)
+X_train, X_test, Y_train, Y_test = train_test_split(data['text'], data.target, test_size=0.4, random_state=42)
 
 pipe = Pipeline([('vect', CountVectorizer()),
                  ('tfidf', TfidfTransformer()),
-                 ('model', DecisionTreeClassifier(criterion='entropy',
-                                                 max_depth=20,
-                                                 splitter='best',
-                                                 random_state=42))])
+                 ('model', PassiveAggressiveClassifier())])
 
 model = pipe.fit(X_train, Y_train)
 prediction = model.predict(X_test)
