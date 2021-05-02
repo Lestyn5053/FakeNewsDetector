@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.feature_extraction.text import TfidfTransformer
+from sklearn.feature_extraction.text import TfidfTransformer, TfidfVectorizer
 from sklearn import feature_extraction, linear_model, model_selection, preprocessing
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
@@ -51,7 +51,7 @@ data['text'] = data['text'].apply(lambda x: ' '.join([word for word in x.split()
 
 X_train, X_test, Y_train, Y_test = train_test_split(data['text'], data.target, test_size=0.4, random_state=42)
 
-pipe = Pipeline([('vect', CountVectorizer()),
+pipe = Pipeline([('vect', TfidfVectorizer()),
                  ('tfidf', TfidfTransformer()),
                  ('model', PassiveAggressiveClassifier())])
 
