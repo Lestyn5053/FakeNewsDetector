@@ -19,4 +19,12 @@ This program also makes use of a MySQL Server. For simplicity's sake, the progra
 
 4) Install Python Libraries
 
-This software makes use of many python libraries that will need to be installed for it to run. Open up Command Prompt and go to the project's directory. From there, run "pip3 install 
+This software makes use of many python libraries that will need to be installed for it to run. Open up Command Prompt and go to the project's directory. From there, all of the libraries required can be installed in this one line: "pip3 install requests kivy newspaper3k mysql-connector-python pandas numpy matplotlib seaborn scikit-learn". This may take a few minutes.
+
+5) Build the Machine Learning Model
+
+Before we can fact check articles, we need a model for the program to work with. For this reason, once all of the python libraries are installed, run "python buildModel.py". This will take a few moments, but will build the model and create the file "final_model.sav" within the program directory. 
+
+6) Finally, Run the Program
+
+To run this program, all you need to do is run "python main.py" within the command line from the program's directory. You should see the GUI pop open!
