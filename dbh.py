@@ -60,5 +60,5 @@ database_query = "CREATE DATABASE IF NOT EXISTS Articles"
 create_database(serverConnection, database_query)
 
 new_table = "CREATE TABLE IF NOT EXISTS Article (ID INT NOT NULL AUTO_INCREMENT, Title VARCHAR(250) NOT NULL, " \
-            "Text LONGTEXT NOT NULL, PRIMARY KEY(ID))"
+            "Text LONGTEXT NOT NULL, Label VARCHAR(250), PRIMARY KEY(ID))"
 execute_query(dbConnection, new_table)
