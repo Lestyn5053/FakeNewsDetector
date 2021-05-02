@@ -27,9 +27,9 @@ class FactCheckWindow(Screen):
                 if not self.isNotAnArticle():
                     try:
                         scrapeArticleInfo(self.articleURL.text)
-                        connection = create_server_connection("localhost", "root", pw, "Articles")
+                        connection = create_server_connection("localhost", "root", pw)
                         cursor = connection.cursor(prepared=True)
-                        sql_insert_query = "INSERT INTO Article (Title, Text, Label) VALUES (%s, %s, %s)"
+                        sql_insert_query = "INSERT INTO Articles.Article (Title, Text, Label) VALUES (%s, %s, %s)"
                         insert_tuple = (getArticleTitle(self.articleURL.text), getArticleText(self.articleURL.text),
                                         str(predict_real_fake()))
 
@@ -106,9 +106,9 @@ class RecentlyCheckedWindow(Screen):
 
     def displayArticles(self):
         try:
-            connection = create_server_connection("localhost", "root", pw, "Articles")
+            connection = create_server_connection("localhost", "root", pw)
             cursor = connection.cursor(buffered=True)
-            sql_query = "SELECT Title, Label FROM Article ORDER BY ID DESC LIMIT 8"
+            sql_query = "SELECT Title, Label FROM Articles.Article ORDER BY ID DESC LIMIT 8"
             cursor.execute(sql_query)
             connection.commit()
             rows = cursor.fetchall()

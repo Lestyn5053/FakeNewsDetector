@@ -19,7 +19,6 @@ stop = stopwords.words('english')
 
 fake = pd.read_csv("data/Fake.csv")
 true = pd.read_csv("data/True.csv")
-test = pd.read_csv("data/Test.csv")
 
 fake['target'] = 'fake'
 true['target'] = 'true'
@@ -39,8 +38,6 @@ def punctuation_removal(text):
 
 
 data['text'] = data['text'].apply(punctuation_removal)
-# test['text'] = test['text'].apply(punctuation_removal)
-print(test['text'])
 
 data['text'] = data['text'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
 
